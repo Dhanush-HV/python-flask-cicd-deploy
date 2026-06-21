@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /myapp/docker_crediential/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker_crediential/password
+    DOCKER_REGISTRY_URL: /myapp/docker_crediential/docker_registry_url
+
 phases:
   install:
     runtime-versions:
@@ -16,6 +22,9 @@ phases:
       - echo "Running build phase..."
       - pwd
       - ls -ltr
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/cicd-python-app:latest" .
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/cicd-pyhon-app:latest"
       - echo "Build completed"
 
   post_build:
