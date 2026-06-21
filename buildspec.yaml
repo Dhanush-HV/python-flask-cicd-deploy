@@ -1,9 +1,29 @@
 version: 0.2
 
+env:
+  parameter-store:
+
 phases:
-  build:
+  install:
+    runtime-version:
+      python: 3.11
+
+  pre_build:
     commands:
-      - echo "Build completed"
+      - echo "Install dependencies..."
+      - pip install -r python-flask-cicd-deploy/script/install_dependencies.sh
+      
+
+    build:
+      cpmmands:
+        - echo "Running tests....."
+        - cd python-flask-cicd-deploy/
+        - echo "Build Docker image......"
+
+  post_build:
+    commands:
+      - echo "Build completed successfuly"
+
 
 artifacts:
   files:
