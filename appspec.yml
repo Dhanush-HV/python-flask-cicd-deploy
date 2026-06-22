@@ -7,7 +7,7 @@ files:
     destination: home/ec2-user/flask-app
 
 hooks:
-  AfterInstall:
+  BeforeInstall:
     - location: script/install_dependencies.sh
        timeout: 300
        runas: root
