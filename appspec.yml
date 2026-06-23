@@ -1,17 +1,15 @@
 version: 0.0
 os: linux
 
-
 files:
   - source: /
-    destination: home/ec2-user/flask-app
+    destination: /home/ec2-user/flask-app
 
 hooks:
   BeforeInstall:
     - location: script/install_dependencies.sh
-       timeout: 300
-       runas: root
-       
+      timeout: 300
+      runas: root
 
   ApplicationStart:
     - location: script/start_container.sh
